@@ -12,12 +12,6 @@
 		DB1ED22921DE148A00AEB658 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = DB1ED22721DE148A00AEB658 /* Main.storyboard */; };
 		DB1ED22B21DE148C00AEB658 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = DB1ED22A21DE148C00AEB658 /* Assets.xcassets */; };
 		DB1ED22E21DE148C00AEB658 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = DB1ED22C21DE148C00AEB658 /* LaunchScreen.storyboard */; };
-		DB1ED23B21DE14A900AEB658 /* MenuItem.swift in Sources */ = {isa = PBXBuildFile; fileRef = DB1ED23521DE14A900AEB658 /* MenuItem.swift */; };
-		DB1ED23C21DE14A900AEB658 /* MenuTheme.swift in Sources */ = {isa = PBXBuildFile; fileRef = DB1ED23621DE14A900AEB658 /* MenuTheme.swift */; };
-		DB1ED23D21DE14A900AEB658 /* MenuItemView.swift in Sources */ = {isa = PBXBuildFile; fileRef = DB1ED23721DE14A900AEB658 /* MenuItemView.swift */; };
-		DB1ED23F21DE14A900AEB658 /* MenuContents.swift in Sources */ = {isa = PBXBuildFile; fileRef = DB1ED23921DE14A900AEB658 /* MenuContents.swift */; };
-		DB1ED24021DE14A900AEB658 /* MenuView.swift in Sources */ = {isa = PBXBuildFile; fileRef = DB1ED23A21DE14A900AEB658 /* MenuView.swift */; };
-		DB1ED24221DE150300AEB658 /* UIScrollView+ScrollToRect.swift in Sources */ = {isa = PBXBuildFile; fileRef = DB1ED24121DE150300AEB658 /* UIScrollView+ScrollToRect.swift */; };
 		E68567C1D9AD4571E3F3DDF3 /* Pods_MenuTest.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 22C6FCB6E8258A01047A1F14 /* Pods_MenuTest.framework */; };
 /* End PBXBuildFile section */
 
@@ -32,12 +26,6 @@
 		DB1ED22A21DE148C00AEB658 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		DB1ED22D21DE148C00AEB658 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
 		DB1ED22F21DE148C00AEB658 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
-		DB1ED23521DE14A900AEB658 /* MenuItem.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MenuItem.swift; sourceTree = "<group>"; };
-		DB1ED23621DE14A900AEB658 /* MenuTheme.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MenuTheme.swift; sourceTree = "<group>"; };
-		DB1ED23721DE14A900AEB658 /* MenuItemView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MenuItemView.swift; sourceTree = "<group>"; };
-		DB1ED23921DE14A900AEB658 /* MenuContents.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MenuContents.swift; sourceTree = "<group>"; };
-		DB1ED23A21DE14A900AEB658 /* MenuView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MenuView.swift; sourceTree = "<group>"; };
-		DB1ED24121DE150300AEB658 /* UIScrollView+ScrollToRect.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "UIScrollView+ScrollToRect.swift"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -90,8 +78,6 @@
 		DB1ED22221DE148A00AEB658 /* MenuTest */ = {
 			isa = PBXGroup;
 			children = (
-				DBBCA47921DF9805008F3E68 /* Menu */,
-				DBBCA47A21DF9843008F3E68 /* Util */,
 				DB1ED22321DE148A00AEB658 /* AppDelegate.swift */,
 				DB1ED22521DE148A00AEB658 /* ViewController.swift */,
 				DB1ED22721DE148A00AEB658 /* Main.storyboard */,
@@ -100,26 +86,6 @@
 				DB1ED22F21DE148C00AEB658 /* Info.plist */,
 			);
 			path = MenuTest;
-			sourceTree = "<group>";
-		};
-		DBBCA47921DF9805008F3E68 /* Menu */ = {
-			isa = PBXGroup;
-			children = (
-				DB1ED23921DE14A900AEB658 /* MenuContents.swift */,
-				DB1ED23521DE14A900AEB658 /* MenuItem.swift */,
-				DB1ED23721DE14A900AEB658 /* MenuItemView.swift */,
-				DB1ED23A21DE14A900AEB658 /* MenuView.swift */,
-				DB1ED23621DE14A900AEB658 /* MenuTheme.swift */,
-			);
-			path = Menu;
-			sourceTree = "<group>";
-		};
-		DBBCA47A21DF9843008F3E68 /* Util */ = {
-			isa = PBXGroup;
-			children = (
-				DB1ED24121DE150300AEB658 /* UIScrollView+ScrollToRect.swift */,
-			);
-			path = Util;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -216,10 +182,12 @@
 			);
 			inputPaths = (
 				"${SRCROOT}/Pods/Target Support Files/Pods-MenuTest/Pods-MenuTest-frameworks.sh",
+				"${BUILT_PRODUCTS_DIR}/Menu/Menu.framework",
 				"${BUILT_PRODUCTS_DIR}/SnapKit/SnapKit.framework",
 			);
 			name = "[CP] Embed Pods Frameworks";
 			outputPaths = (
+				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/Menu.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/SnapKit.framework",
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -234,14 +202,8 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				DB1ED23B21DE14A900AEB658 /* MenuItem.swift in Sources */,
-				DB1ED24021DE14A900AEB658 /* MenuView.swift in Sources */,
 				DB1ED22621DE148A00AEB658 /* ViewController.swift in Sources */,
-				DB1ED23C21DE14A900AEB658 /* MenuTheme.swift in Sources */,
-				DB1ED24221DE150300AEB658 /* UIScrollView+ScrollToRect.swift in Sources */,
 				DB1ED22421DE148A00AEB658 /* AppDelegate.swift in Sources */,
-				DB1ED23F21DE14A900AEB658 /* MenuContents.swift in Sources */,
-				DB1ED23D21DE14A900AEB658 /* MenuItemView.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
