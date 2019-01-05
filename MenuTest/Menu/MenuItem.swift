@@ -35,19 +35,19 @@ public extension UIKeyModifierFlags {
     public var symbols: [String] {
         var result: [String] = []
         
-        if self.contains(.alternate) {
+        if contains(.alternate) {
             result.append("⌥")
         }
         
-        if self.contains(.control) {
+        if contains(.control) {
             result.append("⌃")
         }
         
-        if self.contains(.shift) {
+        if contains(.shift) {
             result.append("⇧")
         }
         
-        if self.contains(.command) {
+        if contains(.command) {
             result.append("⌘")
         }
         
@@ -64,12 +64,12 @@ public struct ShortcutMenuItem: Equatable, MenuItem {
         public let title: String
     }
     
-    public var action: () -> () = {}
+    public var action: () -> Void = {}
     
     public let name: String
     public let shortcut: Shortcut?
     
-    public init(name: String, shortcut: (UIKeyModifierFlags, String)? = nil, action: @escaping () -> ()) {
+    public init(name: String, shortcut: (UIKeyModifierFlags, String)? = nil, action: @escaping () -> Void) {
         self.name = name
         self.action = action
         

@@ -78,18 +78,18 @@ class MenuContents: UIView {
     }
     
     private func pointIsInsideBottomEdgeScrollingBoundary(_ point: CGPoint) -> Bool {
-        return point.y > self.scrollView.bounds.size.height - 24 && self.isScrollable
+        return point.y > scrollView.bounds.size.height - 24 && isScrollable
     }
     
     private func pointIsInsideTopEdgeScrollingBoundary(_ point: CGPoint) -> Bool {
-        return point.y < self.scrollView.frame.minY + 40 && self.isScrollable
+        return point.y < scrollView.frame.minY + 40 && isScrollable
     }
     
     private func updateHighlightedPosition(_ point: CGPoint) {
         menuItemViews.forEach {
             var view = $0
             
-            let point = self.convert(point, to: $0)
+            let point = convert(point, to: $0)
             let contains = $0.point(inside: point, with: nil)
             
             view.highlighted = contains
@@ -139,14 +139,17 @@ class MenuContents: UIView {
         }
     }
     
-    func selectPosition(_ point: CGPoint, completion: @escaping (MenuItem) -> ()) {
+    func selectPosition(_ point: CGPoint, completion: @escaping (MenuItem) -> Void) {
         menuItemViews.enumerated().forEach {
             index, view in
             
-            let point = self.convert(point, to: view)
+            let point = convert(point, to: view)
             if view.point(inside: point, with: nil) {
                 view.startSelectionAnimation {
-                    completion(self.items[index])
+                    [weak self] in
+                    if let self = self {
+                        completion(self.items[index])
+                    }
                 }
             }
         }
@@ -306,7 +309,7 @@ class MenuContents: UIView {
         
         let insetAdjustment = scrollView.contentInset.top + scrollView.contentInset.bottom
         
-        scrollContainer.snp.makeConstraints {
+        scrollContainer.snp.remakeConstraints {
             make in
             make.left.bottom.right.equalToSuperview()
             make.top.equalTo(superview.snp.bottom)

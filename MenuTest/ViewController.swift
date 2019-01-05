@@ -15,7 +15,7 @@ class ViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        let menu = MenuView(title: "Menu", theme: LightMenuTheme()) { () -> [MenuItem] in
+        let menu = MenuView(title: "Menu", theme: LightMenuTheme()) { [weak self] () -> [MenuItem] in
             return [
                 ShortcutMenuItem(name: "Undo", shortcut: (.command, "Z"), action: {
                     [weak self] in

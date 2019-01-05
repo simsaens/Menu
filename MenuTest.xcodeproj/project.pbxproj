@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		523657D221E077BB00631186 /* MapKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 523657D121E077BB00631186 /* MapKit.framework */; };
 		DB1ED22421DE148A00AEB658 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = DB1ED22321DE148A00AEB658 /* AppDelegate.swift */; };
 		DB1ED22621DE148A00AEB658 /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = DB1ED22521DE148A00AEB658 /* ViewController.swift */; };
 		DB1ED22921DE148A00AEB658 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = DB1ED22721DE148A00AEB658 /* Main.storyboard */; };
@@ -17,6 +18,7 @@
 
 /* Begin PBXFileReference section */
 		22C6FCB6E8258A01047A1F14 /* Pods_MenuTest.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_MenuTest.framework; sourceTree = BUILT_PRODUCTS_DIR; };
+		523657D121E077BB00631186 /* MapKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = MapKit.framework; path = System/Library/Frameworks/MapKit.framework; sourceTree = SDKROOT; };
 		9A077B6042A00FA4D7B76BF7 /* Pods-MenuTest.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-MenuTest.debug.xcconfig"; path = "Pods/Target Support Files/Pods-MenuTest/Pods-MenuTest.debug.xcconfig"; sourceTree = "<group>"; };
 		BFDAE20353D78774FED05BD7 /* Pods-MenuTest.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-MenuTest.release.xcconfig"; path = "Pods/Target Support Files/Pods-MenuTest/Pods-MenuTest.release.xcconfig"; sourceTree = "<group>"; };
 		DB1ED22021DE148A00AEB658 /* MenuTest.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = MenuTest.app; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -33,6 +35,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				523657D221E077BB00631186 /* MapKit.framework in Frameworks */,
 				E68567C1D9AD4571E3F3DDF3 /* Pods_MenuTest.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -52,6 +55,7 @@
 		73D000595D809CE8933B575C /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
+				523657D121E077BB00631186 /* MapKit.framework */,
 				22C6FCB6E8258A01047A1F14 /* Pods_MenuTest.framework */,
 			);
 			name = Frameworks;
@@ -122,6 +126,11 @@
 				TargetAttributes = {
 					DB1ED21F21DE148A00AEB658 = {
 						CreatedOnToolsVersion = 10.1;
+						SystemCapabilities = {
+							com.apple.Maps.iOS = {
+								enabled = 1;
+							};
+						};
 					};
 				};
 			};

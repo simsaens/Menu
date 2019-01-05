@@ -15,7 +15,7 @@ import UIKit
 @objc public extension UIScrollView {
     @objc public func scrollOffset(for rect: CGRect) -> CGPoint {
         //Compute the visible area of the scroll view
-        var visibleArea = self.convert(bounds, to: self)
+        var visibleArea = convert(bounds, to: self)
         
         visibleArea.size.height -= (contentInset.top + contentInset.bottom)
         visibleArea.origin.y += contentInset.top
