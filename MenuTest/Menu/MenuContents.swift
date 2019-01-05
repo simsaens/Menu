@@ -309,7 +309,7 @@ class MenuContents: UIView {
         
         let insetAdjustment = scrollView.contentInset.top + scrollView.contentInset.bottom
         
-        scrollContainer.snp.makeConstraints {
+        scrollContainer.snp.remakeConstraints {
             make in
             make.left.bottom.right.equalToSuperview()
             make.top.equalTo(superview.snp.bottom)
