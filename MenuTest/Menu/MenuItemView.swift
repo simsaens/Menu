@@ -16,13 +16,13 @@ public protocol MenuItemView {
     
     var initialFocusedRect: CGRect? { get }
     
-    var updateLayout: () -> () { get set }
+    var updateLayout: () -> Void { get set }
     
-    func startSelectionAnimation(completion: @escaping ()->())
+    func startSelectionAnimation(completion: @escaping () -> Void)
 }
 
 extension MenuItemView {
-    public func startSelectionAnimation(completion: @escaping ()->()) {}
+    public func startSelectionAnimation(completion: @escaping () -> Void) {}
     
     public var initialFocusedRect: CGRect? { return nil }
 }
@@ -57,7 +57,7 @@ class SeparatorMenuItemView: UIView, MenuItemView, MenuThemeable {
     
     var highlightPosition: CGPoint = .zero
     
-    var updateLayout: () -> () = {}
+    var updateLayout: () -> Void = {}
     
     //MARK: - Themeable
     
@@ -180,7 +180,7 @@ public class ShortcutMenuItemView: UIView, MenuItemView, MenuThemeable {
         fatalError("init(coder:) has not been implemented")
     }
     
-    public func startSelectionAnimation(completion: @escaping ()->()) {
+    public func startSelectionAnimation(completion: @escaping () -> Void) {
         updateHighlightState(false)
         
         DispatchQueue.main.asyncAfter(deadline: .now() + 0.1) {
@@ -200,7 +200,7 @@ public class ShortcutMenuItemView: UIView, MenuItemView, MenuThemeable {
     
     public var highlightPosition: CGPoint = .zero
     
-    public var updateLayout: () -> () = {}
+    public var updateLayout: () -> Void = {}
     
     //MARK: - Themeable Helpers
     

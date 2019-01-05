@@ -64,12 +64,12 @@ public struct ShortcutMenuItem: Equatable, MenuItem {
         public let title: String
     }
     
-    public var action: () -> () = {}
+    public var action: () -> Void = {}
     
     public let name: String
     public let shortcut: Shortcut?
     
-    public init(name: String, shortcut: (UIKeyModifierFlags, String)? = nil, action: @escaping () -> ()) {
+    public init(name: String, shortcut: (UIKeyModifierFlags, String)? = nil, action: @escaping () -> Void) {
         self.name = name
         self.action = action
         

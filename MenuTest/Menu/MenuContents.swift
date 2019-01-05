@@ -139,7 +139,7 @@ class MenuContents: UIView {
         }
     }
     
-    func selectPosition(_ point: CGPoint, completion: @escaping (MenuItem) -> ()) {
+    func selectPosition(_ point: CGPoint, completion: @escaping (MenuItem) -> Void) {
         menuItemViews.enumerated().forEach {
             index, view in
             
