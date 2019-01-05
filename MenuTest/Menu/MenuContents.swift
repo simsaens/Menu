@@ -78,18 +78,18 @@ class MenuContents: UIView {
     }
     
     private func pointIsInsideBottomEdgeScrollingBoundary(_ point: CGPoint) -> Bool {
-        return point.y > self.scrollView.bounds.size.height - 24 && self.isScrollable
+        return point.y > scrollView.bounds.size.height - 24 && isScrollable
     }
     
     private func pointIsInsideTopEdgeScrollingBoundary(_ point: CGPoint) -> Bool {
-        return point.y < self.scrollView.frame.minY + 40 && self.isScrollable
+        return point.y < scrollView.frame.minY + 40 && isScrollable
     }
     
     private func updateHighlightedPosition(_ point: CGPoint) {
         menuItemViews.forEach {
             var view = $0
             
-            let point = self.convert(point, to: $0)
+            let point = convert(point, to: $0)
             let contains = $0.point(inside: point, with: nil)
             
             view.highlighted = contains
@@ -143,10 +143,13 @@ class MenuContents: UIView {
         menuItemViews.enumerated().forEach {
             index, view in
             
-            let point = self.convert(point, to: view)
+            let point = convert(point, to: view)
             if view.point(inside: point, with: nil) {
                 view.startSelectionAnimation {
-                    completion(self.items[index])
+                    [weak self] in
+                    if let self = self {
+                        completion(self.items[index])
+                    }
                 }
             }
         }

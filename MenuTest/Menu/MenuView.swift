@@ -22,7 +22,7 @@ public class MenuView: UIView, MenuThemeable {
     
     public var title: String {
         didSet {
-            titleLabel.text = title            
+            titleLabel.text = title
             contents?.title = title
         }
     }
@@ -145,7 +145,7 @@ public class MenuView: UIView, MenuThemeable {
         //Highlight whatever we can
         if let contents = self.contents {
             let localPoint = sender.location(in: self)
-            let contentsPoint = self.convert(localPoint, to: contents)
+            let contentsPoint = convert(localPoint, to: contents)
             
             if contents.pointInsideMenuShape(contentsPoint) {
                 contents.highlightedPosition = CGPoint(x: contentsPoint.x, y: localPoint.y)
@@ -175,9 +175,9 @@ public class MenuView: UIView, MenuThemeable {
                     
                     if contents.point(inside: point, with: nil) {
                         contents.selectPosition(point, completion: {
-                            menuItem in
+                            [weak self] menuItem in
                             
-                            self.hideContents(animated: true)
+                            self?.hideContents(animated: true)
                             
                             menuItem.performAction()
                         })
@@ -238,7 +238,7 @@ public class MenuView: UIView, MenuThemeable {
     
     private func hideContents(animated: Bool) {
         let contentsView = contents
-        self.contents = nil
+        contents = nil
         
         longPress?.minimumPressDuration = 0.0
         
@@ -264,10 +264,10 @@ public class MenuView: UIView, MenuThemeable {
     
     private func relayoutContents() {
         if let contents = contents {
-            self.setNeedsLayout()
-            self.layoutIfNeeded()
+            setNeedsLayout()
+            layoutIfNeeded()
             
-            contents.generateMaskAndShadow(alignment: self.contentAlignment)
+            contents.generateMaskAndShadow(alignment: contentAlignment)
         }
     }
     

@@ -184,7 +184,8 @@ public class ShortcutMenuItemView: UIView, MenuItemView, MenuThemeable {
         updateHighlightState(false)
         
         DispatchQueue.main.asyncAfter(deadline: .now() + 0.1) {
-            self.updateHighlightState(true)
+            [weak self] in
+            self?.updateHighlightState(true)
             
             completion()
         }

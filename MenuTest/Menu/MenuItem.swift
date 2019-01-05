@@ -35,19 +35,19 @@ public extension UIKeyModifierFlags {
     public var symbols: [String] {
         var result: [String] = []
         
-        if self.contains(.alternate) {
+        if contains(.alternate) {
             result.append("⌥")
         }
         
-        if self.contains(.control) {
+        if contains(.control) {
             result.append("⌃")
         }
         
-        if self.contains(.shift) {
+        if contains(.shift) {
             result.append("⇧")
         }
         
-        if self.contains(.command) {
+        if contains(.command) {
             result.append("⌘")
         }
         
