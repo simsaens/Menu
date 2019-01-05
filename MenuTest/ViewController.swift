@@ -8,6 +8,7 @@
 
 import UIKit
 import SnapKit
+import Menu
 
 class ViewController: UIViewController {
 
