@@ -26,6 +26,8 @@ class MenuContents: UIView {
     private let scrollContainer = UIView()
     private let scrollView = UIScrollView()
     
+    var highlightChanged: () -> Void = {}
+    
     let stackView: UIStackView
     
     private let titleLabel = UILabel()
@@ -229,6 +231,15 @@ class MenuContents: UIView {
         stackView.alignment = .fill
         stackView.distribution = .equalSpacing
         stackView.spacing = 0
+        
+        menuItemViews.forEach {
+            var item = $0
+            
+            item.didHighlight = {
+                [weak self] in
+                self?.highlightChanged()
+            }
+        }
         
         applyTheme(theme)
     }

@@ -19,6 +19,7 @@ public class MenuView: UIView, MenuThemeable {
     private let gestureBarView = UIView()
     private let tintView = UIView()
     private let effectView = UIVisualEffectView(effect: UIBlurEffect(style: .light))
+    private let feedback = UISelectionFeedbackGenerator()
     
     public var title: String {
         didSet {
@@ -234,6 +235,13 @@ public class MenuView: UIView, MenuThemeable {
         
         contents.generateMaskAndShadow(alignment: contentAlignment)
         contents.focusInitialViewIfNecessary()
+        
+        feedback.prepare()
+        contents.highlightChanged = {
+            [weak self] in
+            
+            self?.feedback.selectionChanged()
+        }
     }
     
     public func hideContents(animated: Bool) {
