@@ -29,7 +29,7 @@ Pod::Spec.new do |spec|
   # spec.authors            = { "Simeon Saëns" => "simeon@twolivesleft.com" }
   spec.social_media_url   = "https://twitter.com/twolivesleft"
 
-  spec.platform     = :ios, "10.0"
+  spec.platform     = :ios, "9.0"
   # spec.ios.deployment_target = "10.0"
 
   spec.source       = { :git => "https://github.com/TwoLivesLeft/Menu.git", :tag => "#{spec.version}" }

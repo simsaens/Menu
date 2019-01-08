@@ -101,44 +101,40 @@ class MenuContents: UIView {
         let pointInsideBoundary = pointIsInsideTopEdgeScrollingBoundary(point) || pointIsInsideBottomEdgeScrollingBoundary(point)
         
         if pointInsideBoundary && edgeScrollTimer == nil && isInteractiveDragActive {
-            edgeScrollTimer = Timer.scheduledTimer(withTimeInterval: 0.016, repeats: true, block: {
-                [weak self] _ in
-                
-                guard let self = self else {
-                    return
-                }
-                
-                let point = self.highlightedPosition ?? .zero
-                let offsetAmount: CGFloat = 2.0
-                
-                if self.pointIsInsideBottomEdgeScrollingBoundary(point) {
-                    var offset = self.scrollView.contentOffset
-                    offset.y += offsetAmount
-                    
-                    let maxOffset = self.scrollView.maxContentOffset
-                    
-                    if offset.y < maxOffset.y {
-                        self.scrollView.contentOffset = offset
-                    }
-                }
-                
-                if self.pointIsInsideTopEdgeScrollingBoundary(point) {
-                    var offset = self.scrollView.contentOffset
-                    offset.y -= offsetAmount
-                    
-                    let minOffset = -self.scrollView.contentInset.top
-                    
-                    if offset.y > minOffset {
-                        self.scrollView.contentOffset = offset
-                    }
-                }
-                
-                self.updateHighlightedPosition(point)
-            })
+            edgeScrollTimer = Timer.scheduledTimer(timeInterval: 0.016, target: self, selector: #selector(scrollMenuIfNeeded), userInfo: nil, repeats: true)
         } else if !pointInsideBoundary {
             edgeScrollTimer?.invalidate()
             edgeScrollTimer = nil
         }
+    }
+
+    @objc private func scrollMenuIfNeeded() {
+        let point = self.highlightedPosition ?? .zero
+        let offsetAmount: CGFloat = 2.0
+
+        if self.pointIsInsideBottomEdgeScrollingBoundary(point) {
+            var offset = self.scrollView.contentOffset
+            offset.y += offsetAmount
+
+            let maxOffset = self.scrollView.maxContentOffset
+
+            if offset.y < maxOffset.y {
+                self.scrollView.contentOffset = offset
+            }
+        }
+
+        if self.pointIsInsideTopEdgeScrollingBoundary(point) {
+            var offset = self.scrollView.contentOffset
+            offset.y -= offsetAmount
+
+            let minOffset = -self.scrollView.contentInset.top
+
+            if offset.y > minOffset {
+                self.scrollView.contentOffset = offset
+            }
+        }
+
+        self.updateHighlightedPosition(point)
     }
     
     func selectPosition(_ point: CGPoint, completion: @escaping (MenuItem) -> Void) {
@@ -374,14 +370,24 @@ class MenuContents: UIView {
         sublayer.shadowPath = path.cgPath
         sublayer.shadowOffset = CGSize(width: 0, height: 6)
         
-        let imageRenderer = UIGraphicsImageRenderer(size: shadowView.bounds.size)
-        
-        let shadowMask = imageRenderer.image {
-            context in
-            
+        let shadowMask: UIImage
+        let shadowViewBounds = shadowView.bounds
+        let shadowMaskSize = shadowViewBounds.size
+        if #available(iOS 10, *) {
+            let imageRenderer = UIGraphicsImageRenderer(size: shadowMaskSize)
+            shadowMask = imageRenderer.image { context in
+                UIColor.white.setFill()
+                context.fill(shadowViewBounds)
+                path.fill(with: .clear, alpha: 1.0)
+            }
+        } else {
+            UIGraphicsBeginImageContext(shadowMaskSize)
             UIColor.white.setFill()
-            context.fill(shadowView.bounds)
+            let context = UIGraphicsGetCurrentContext()
+            context?.fill(shadowViewBounds)
             path.fill(with: .clear, alpha: 1.0)
+            shadowMask = UIGraphicsGetImageFromCurrentImageContext() ?? UIImage()
+            UIGraphicsEndImageContext()
         }
         
         let imageMask = CALayer()

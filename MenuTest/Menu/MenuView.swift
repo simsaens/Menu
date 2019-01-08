@@ -19,7 +19,7 @@ public class MenuView: UIView, MenuThemeable {
     private let gestureBarView = UIView()
     private let tintView = UIView()
     private let effectView = UIVisualEffectView(effect: UIBlurEffect(style: .light))
-    private let feedback = UISelectionFeedbackGenerator()
+    private var feedback: Any?
     
     public var title: String {
         didSet {
@@ -58,6 +58,10 @@ public class MenuView: UIView, MenuThemeable {
         self.theme = theme
         
         super.init(frame: .zero)
+
+        if #available(iOS 10, *) {
+            feedback = UISelectionFeedbackGenerator()
+        }
         
         titleLabel.text = title
         titleLabel.textColor = theme.darkTintColor
@@ -235,12 +239,16 @@ public class MenuView: UIView, MenuThemeable {
         
         contents.generateMaskAndShadow(alignment: contentAlignment)
         contents.focusInitialViewIfNecessary()
-        
-        feedback.prepare()
+
+        if #available(iOS 10, *), let generator = feedback as? UISelectionFeedbackGenerator {
+            generator.prepare()
+        }
         contents.highlightChanged = {
             [weak self] in
             
-            self?.feedback.selectionChanged()
+            if #available(iOS 10, *), let generator = self?.feedback as? UISelectionFeedbackGenerator {
+                generator.selectionChanged()
+            }
         }
     }
     
