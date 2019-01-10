@@ -17,7 +17,7 @@ Pod::Spec.new do |spec|
   #   * Write the description between the DESC delimiters below.
   #   * Finally, don't worry about the indent, CocoaPods strips it!
   spec.description  = <<-DESC
-    The iOS Menu.
+    The iOS Menu is a macOS style menu framework for iOS. It provides gesture and tap-based access to menu items, support for keyboard shortcuts, and a themeable, iOS-inspired design.
   DESC
 
   spec.homepage     = "https://github.com/TwoLivesLeft/Menu"
@@ -26,7 +26,6 @@ Pod::Spec.new do |spec|
   spec.license      = { :type => "MIT", :file => "LICENSE" }
 
   spec.author             = { "Simeon Saëns" => "simeon@twolivesleft.com" }
-  # spec.authors            = { "Simeon Saëns" => "simeon@twolivesleft.com" }
   spec.social_media_url   = "https://twitter.com/twolivesleft"
 
   spec.platform     = :ios, "10.0"
@@ -34,6 +33,7 @@ Pod::Spec.new do |spec|
 
   spec.source       = { :git => "https://github.com/TwoLivesLeft/Menu.git", :tag => "#{spec.version}" }
   spec.source_files  = "MenuTest/Menu/*.swift", "MenuTest/Util/*.swift"
+  spec.swift_version = '4.2'
 
   spec.dependency "SnapKit"
 
