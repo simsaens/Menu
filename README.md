@@ -8,7 +8,7 @@ This repo contains much of the code detailed in my posts
 
 Add it via CocoaPods with
 
-    pod 'Menu', :git => 'https://github.com/TwoLivesLeft/Menu.git'
+    pod 'Menu'
 
 If you like this or have questions, let me know [on twitter](https://twitter.com/twolivesleft)
 
