@@ -142,18 +142,20 @@ public class MenuView: UIView, MenuThemeable, UIGestureRecognizerDelegate {
     //MARK: - Gesture Handling
     
     private var gestureStart: Date = .distantPast
-    private var startPoint: CGPoint = CGPoint.zero
+    private var gestureChanged: Date = .distantPast
     
     @objc private func longPressGesture(_ sender: UILongPressGestureRecognizer) {
+        
         switch sender.state {
         case .began:
             if !isShowingContents {
                 showContents()
             }
-            startPoint = sender.location(in: self)
             gestureStart = Date()
         case .changed:
-            if Date().timeIntervalSince(gestureStart) > 0.3 {
+            gestureChanged = Date()
+            
+            if gestureChanged.timeIntervalSince(gestureStart) > 0.3 {
                 contents?.isInteractiveDragActive = true
                 
                 //Highlight whatever we can
@@ -169,12 +171,7 @@ public class MenuView: UIView, MenuThemeable, UIGestureRecognizerDelegate {
         case .cancelled:
             fallthrough
         case .ended:
-            let endPoint = sender.location(in: self)
-            let xDist = endPoint.x - startPoint.x
-            let yDist = endPoint.y - startPoint.y
-            let distance = sqrt(xDist * xDist + yDist * yDist)
-            
-            if (distance < 5 || contents?.isInteractiveDragActive == true) {
+            if (gestureChanged.timeIntervalSince(gestureStart) < 0 || contents?.isInteractiveDragActive == true) {
                 if let contents = contents {
                     let point = convert(sender.location(in: self), to: contents)
                     
