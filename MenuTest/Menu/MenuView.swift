@@ -11,7 +11,7 @@ import SnapKit
 
 //MARK: - MenuView
 
-public class MenuView: UIView, MenuThemeable {
+public class MenuView: UIView, MenuThemeable, UIGestureRecognizerDelegate {
     
     public static let menuWillPresent = Notification.Name("CodeaMenuWillPresent")
     
@@ -114,6 +114,8 @@ public class MenuView: UIView, MenuThemeable {
         
         longPress = UILongPressGestureRecognizer(target: self, action: #selector(longPressGesture(_:)))
         longPress.minimumPressDuration = 0.0
+        longPress.delegate = self
+        
         addGestureRecognizer(longPress)
         
         applyTheme(theme)
@@ -140,37 +142,36 @@ public class MenuView: UIView, MenuThemeable {
     //MARK: - Gesture Handling
     
     private var gestureStart: Date = .distantPast
+    private var gestureChanged: Date = .distantPast
     
     @objc private func longPressGesture(_ sender: UILongPressGestureRecognizer) {
         
-        //Highlight whatever we can
-        if let contents = self.contents {
-            let localPoint = sender.location(in: self)
-            let contentsPoint = convert(localPoint, to: contents)
-            
-            if contents.pointInsideMenuShape(contentsPoint) {
-                contents.highlightedPosition = CGPoint(x: contentsPoint.x, y: localPoint.y)
-            }
-        }
-
         switch sender.state {
         case .began:
             if !isShowingContents {
-                gestureStart = Date()
                 showContents()
-            } else {
-                gestureStart = .distantPast
             }
+            gestureStart = Date()
+        case .changed:
+            gestureChanged = Date()
             
-            contents?.isInteractiveDragActive = true
+            if gestureChanged.timeIntervalSince(gestureStart) > 0.3 {
+                contents?.isInteractiveDragActive = true
+                
+                //Highlight whatever we can
+                if let contents = self.contents {
+                    let localPoint = sender.location(in: self)
+                    let contentsPoint = convert(localPoint, to: contents)
+                    
+                    if contents.pointInsideMenuShape(contentsPoint) {
+                        contents.highlightedPosition = CGPoint(x: contentsPoint.x, y: localPoint.y)
+                    }
+                }
+            }
         case .cancelled:
             fallthrough
         case .ended:
-            let gestureEnd = Date()
-            
-            contents?.isInteractiveDragActive = false
-            
-            if gestureEnd.timeIntervalSince(gestureStart) > 0.3 {
+            if (gestureChanged.timeIntervalSince(gestureStart) < 0 || contents?.isInteractiveDragActive == true) {
                 if let contents = contents {
                     let point = convert(sender.location(in: self), to: contents)
                     
@@ -187,10 +188,18 @@ public class MenuView: UIView, MenuThemeable {
                     }
                 }
             }
+            contents?.isInteractiveDragActive = false
             
         default:
             ()
         }
+    }
+    
+    public func gestureRecognizer(_ gestureRecognizer: UIGestureRecognizer, shouldRecognizeSimultaneouslyWith otherGestureRecognizer: UIGestureRecognizer) -> Bool {
+        if gestureRecognizer == longPress || otherGestureRecognizer == longPress {
+            return true
+        }
+        return false
     }
     
     public func showContents() {
@@ -226,8 +235,6 @@ public class MenuView: UIView, MenuThemeable {
         
         effectView.isHidden = true
         
-        longPress?.minimumPressDuration = 0.07
-        
         self.contents = contents
         
         setNeedsLayout()
@@ -247,9 +254,7 @@ public class MenuView: UIView, MenuThemeable {
     public func hideContents(animated: Bool) {
         let contentsView = contents
         contents = nil
-        
-        longPress?.minimumPressDuration = 0.0
-        
+                
         effectView.isHidden = false
         
         if animated {
