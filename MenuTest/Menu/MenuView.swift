@@ -177,21 +177,7 @@ public class MenuView: UIView, MenuThemeable, UIGestureRecognizerDelegate {
             contents?.isInteractiveDragActive = false
             
             if gestureEnd.timeIntervalSince(gestureStart) > 0.3 {
-                if let contents = contents {
-                    let point = convert(sender.location(in: self), to: contents)
-                    
-                    if contents.point(inside: point, with: nil) {
-                        contents.selectPosition(point, completion: {
-                            [weak self] menuItem in
-                            
-                            self?.hideContents(animated: true)
-                            
-                            menuItem.performAction()
-                        })
-                    } else {
-                        hideContents(animated: true)
-                    }
-                }
+                selectPositionAndHideContents(sender)
             }
             
         default:
@@ -200,8 +186,12 @@ public class MenuView: UIView, MenuThemeable, UIGestureRecognizerDelegate {
     }
     
     @objc private func tapped(_ sender: UITapGestureRecognizer) {
+        selectPositionAndHideContents(sender)
+    }
+    
+    private func selectPositionAndHideContents(_ gesture: UIGestureRecognizer) {
         if let contents = contents {
-            let point = convert(sender.location(in: self), to: contents)
+            let point = convert(gesture.location(in: self), to: contents)
             
             if contents.point(inside: point, with: nil) {
                 contents.selectPosition(point, completion: {
