@@ -68,10 +68,7 @@ class MenuContents: UIView {
     
     var isInteractiveDragActive: Bool = false {
         didSet {
-            if isInteractiveDragActive {
-                scrollView.panGestureRecognizer.isEnabled = false
-            } else {
-                scrollView.panGestureRecognizer.isEnabled = true
+            if isInteractiveDragActive == false {
                 edgeScrollTimer?.invalidate()
                 edgeScrollTimer = nil
             }
@@ -87,7 +84,7 @@ class MenuContents: UIView {
     }
     
     private func pointIsInsideTopEdgeScrollingBoundary(_ point: CGPoint) -> Bool {
-        return point.y < 70 && isScrollable
+        return point.y < scrollView.frame.minY + 40 && isScrollable
     }
     
     private func updateHighlightedPosition(_ point: CGPoint) {
