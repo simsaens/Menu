@@ -11,7 +11,7 @@ import SnapKit
 
 //MARK: - MenuView
 
-public class MenuView: UIView, MenuThemeable {
+public class MenuView: UIView, MenuThemeable, UIGestureRecognizerDelegate {
     
     public static let menuWillPresent = Notification.Name("CodeaMenuWillPresent")
     
@@ -33,6 +33,7 @@ public class MenuView: UIView, MenuThemeable {
     private var contents: MenuContents?
     private var theme: MenuTheme
     private var longPress: UILongPressGestureRecognizer!
+    private var tapGesture: UITapGestureRecognizer!
     
     private let itemsSource: () -> [MenuItem]
     
@@ -114,7 +115,12 @@ public class MenuView: UIView, MenuThemeable {
         
         longPress = UILongPressGestureRecognizer(target: self, action: #selector(longPressGesture(_:)))
         longPress.minimumPressDuration = 0.0
+        longPress.delegate = self
         addGestureRecognizer(longPress)
+        
+        tapGesture = UITapGestureRecognizer(target: self, action: #selector(tapped(_:)))
+        tapGesture.delegate = self
+        addGestureRecognizer(tapGesture)
         
         applyTheme(theme)
         
@@ -191,6 +197,31 @@ public class MenuView: UIView, MenuThemeable {
         default:
             ()
         }
+    }
+    
+    @objc private func tapped(_ sender: UITapGestureRecognizer) {
+        if let contents = contents {
+            let point = convert(sender.location(in: self), to: contents)
+            
+            if contents.point(inside: point, with: nil) {
+                contents.selectPosition(point, completion: {
+                    [weak self] menuItem in
+                    
+                    self?.hideContents(animated: true)
+                    
+                    menuItem.performAction()
+                })
+            } else {
+                hideContents(animated: true)
+            }
+        }
+    }
+    
+    public func gestureRecognizer(_ gestureRecognizer: UIGestureRecognizer, shouldRecognizeSimultaneouslyWith otherGestureRecognizer: UIGestureRecognizer) -> Bool {
+        if gestureRecognizer == longPress && otherGestureRecognizer == tapGesture {
+            return true
+        }
+        return false
     }
     
     public func showContents() {
