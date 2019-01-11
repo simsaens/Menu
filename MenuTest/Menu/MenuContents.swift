@@ -84,7 +84,7 @@ class MenuContents: UIView {
     }
     
     private func pointIsInsideTopEdgeScrollingBoundary(_ point: CGPoint) -> Bool {
-        return point.y < scrollView.frame.minY + 40 && isScrollable
+        return point.y < 70 && isScrollable
     }
     
     private func updateHighlightedPosition(_ point: CGPoint) {
